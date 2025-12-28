@@ -13,13 +13,13 @@
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![Node.js 16+](https://img.shields.io/badge/node.js-16+-green.svg)](https://nodejs.org/)
 
-[Features](#-vision) • [Quick Start](#-quick-start) • [Documentation](docs/) • [CLI Usage](#-node-npm-users--cli-and-legacy-usage)
+[Features](#vision) • [Quick Start](#quick-start) • [Documentation](docs/) • [CLI Usage](#node-npm-users--cli-and-legacy-usage)
 
 </div>
 
 ---
 
-## 🛠️ Technology Stack
+## Technology Stack
 
 <div align="center">
 
@@ -43,11 +43,11 @@
 
 This repository is Pydorky, a Python-first client and ecosystem built around a small language-agnostic artifact service. Pydorky was inspired by the original `dorky` tool — originally authored by Trishant Pahwa — and extends the idea with data-focused features and a Python client optimized for data teams. The original project provided the foundation; this fork focuses the design on reliability, data ergonomics, and reproducible sharing.
 
-## ✨ Vision
+## Vision
 
 Teams should never lose important artifacts in chat threads, ad-hoc paste tools, or personal drives. Pydorky offers a reproducible, privacy-aware, and developer-friendly way to store project artifacts (secrets, environment files, small datasets, and binaries) in user-controlled storage (S3, GCS, etc.).
 
-## 🎯 Why we built this
+## Why we built this
 
 I grew tired of important artifacts being scattered across chat apps (Teams, Slack), quick paste services (sharetext.io), and personal drives. That pattern causes lost context, duplicate uploads, and potential leaks. Pydorky provides a minimal, auditable, and automated alternative that:
 
@@ -56,11 +56,11 @@ I grew tired of important artifacts being scattered across chat apps (Teams, Sla
 - provides lightweight metadata, idempotency, and streaming-friendly APIs
 - offers a Python client for data teams (Parquet/pyarrow integration) and thin clients for other languages
 
-## 🏗️ Approach
+## Approach
 
 Keep the service small and language-agnostic. Implement a canonical HTTP service for storage semantics (streaming upload/download, idempotency keys, metadata, hierarchical sync). Language clients — Python and Node — remain thin translators that implement ergonomic workflows (`commit`, `stage`, `push`). Heavy data-format work (Parquet conversions, large-table transforms) is handled by optional Python tools or sidecar converters.
 
-## 🚀 Quick start
+## Quick start
 
 ### Install Python Client
 
@@ -84,15 +84,15 @@ client = DorkyClient('http://localhost:3000')
 client.upload('path/to/file', metadata={'note':'example'})
 ```
 
-## 📚 Where to look next
+## Where to look next
 
 Implementation notes and design rationale: see `docs/` (architecture, migration plan, Python client notes).
 
-## 🙏 Acknowledgements
+## Acknowledgements
 
 This project builds on and refines the ideas in the original `dorky` project. See `docs/` for more on differences and the migration path.
 
-## 💻 Node (npm) users — CLI and legacy usage
+## Node (npm) users — CLI and legacy usage
 
 We continue to support the original Node/npm CLI workflows so JavaScript and Ops users can keep using the familiar commands.
 
@@ -112,18 +112,18 @@ npm install -g dorky
 - Push staged files: `dorky --push`
 - Pull files from remote: `dorky --pull`
 
-## ☁️ AWS S3 notes
+## AWS S3 notes
 
 1. Create an S3 bucket and configure `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` in your environment.
 2. Use `dorky --init aws` to set up local metadata and `.dorkyignore`.
 3. Use `dorky --add`, `dorky --push`, `dorky --pull` as your normal workflow.
 
-## 📁 Google Drive notes
+## Google Drive notes
 
 1. Use `dorky --init google-drive` and follow the OAuth setup instructions.
 2. Use the same `--add`, `--push`, `--pull` flow as above.
 
-## 🔧 Developer & compatibility notes
+## Developer & compatibility notes
 
 - The repo contains both the Node CLI and a Python client. The canonical storage semantics are provided by a small HTTP service; clients are thin translators.
 - Current Node compatibility: project targets Node 16 (`.nvmrc` + `engines.node`), with a planned migration to Node 20. See `docs/doc#3 the-correct-node-version`.
@@ -133,16 +133,16 @@ npm install -g dorky
 
 <div align="center">
 
-## 📄 License
+## License
 
 This project is licensed under the ISC License - see the [LICENSE](LICENSE) file for details.
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
 ---
 
-**Made with ❤️ by the Pydorky contributors**
+**Made with care by the Pydorky contributors**
 
 </div>
