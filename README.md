@@ -2,10 +2,10 @@
 
 <!-- Logo Placeholder - Replace with actual logo -->
 <img
-  src="https://raw.githubusercontent.com/Pratham-Jain-3903/pydorky/main/dorky512.png"
+  src="https://raw.githubusercontent.com/Pratham-Jain-3903/pydorky/main/rectdorky.png"
   alt="Pydorky Logo"
   width="500"
-  style="object-fit: cover; object-position: center; height: 350px;"
+  style="object-fit: cover; object-position: center;"
 />
 
 
