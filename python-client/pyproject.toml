@@ -1,7 +1,7 @@
 [project]
-name = "dorky-client"
+name = "pydorky-client"
 version = "0.1.0"
-description = "Dorky Python client (minimal scaffold)"
+description = "Pydorky Python client (minimal scaffold)"
 readme = "README.md"
 requires-python = ">=3.8"
 

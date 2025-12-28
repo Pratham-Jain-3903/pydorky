@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  title: Dorky Artifact Service
+  title: Pydorky Artifact Service
   description: Language-agnostic HTTP service for artifact storage, streaming, metadata, idempotency, and versioning
   version: 0.2.0
 servers:

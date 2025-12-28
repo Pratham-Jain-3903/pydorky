@@ -5,13 +5,13 @@ export default function PrivacyPolicy() {
             <p className="mb-4"><strong>Effective Date:</strong> 28th December 2024</p>
 
             <h2 className="text-2xl font-semibold mb-2">Introduction</h2>
-            <p className="mb-4">Dorky is committed to protecting your privacy. This Privacy Policy outlines our practices regarding the collection, use, and disclosure of information when you use our software.</p>
+            <p className="mb-4">Pydorky is committed to protecting your privacy. This Privacy Policy outlines our practices regarding the collection, use, and disclosure of information when you use our software.</p>
 
             <h2 className="text-2xl font-semibold mb-2">Information Collection and Use</h2>
-            <p className="mb-4">Dorky does not collect, store, or transmit any personal data from its users. All operations are performed locally on your machine, and any interactions with storage services like AWS S3 or Google Drive are conducted directly between your environment and the respective service.</p>
+            <p className="mb-4">Pydorky does not collect, store, or transmit any personal data from its users. All operations are performed locally on your machine, and any interactions with storage services like AWS S3 or Google Drive are conducted directly between your environment and the respective service.</p>
 
             <h2 className="text-2xl font-semibold mb-2">Third-Party Services</h2>
-            <p className="mb-4">While Dorky facilitates the storage of files on third-party services such as AWS S3 and Google Drive, it does not transmit any data to these services on its own. Users are responsible for configuring and managing their credentials and data with these services.</p>
+            <p className="mb-4">While Pydorky facilitates the storage of files on third-party services such as AWS S3 and Google Drive, it does not transmit any data to these services on its own. Users are responsible for configuring and managing their credentials and data with these services.</p>
 
             <h2 className="text-2xl font-semibold mb-2">Security</h2>
             <p className="mb-4">We prioritize the security of your data. However, it's essential to ensure that your environment and the third-party services you use are properly secured and that you follow best practices for credential management.</p>

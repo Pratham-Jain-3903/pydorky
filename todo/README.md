@@ -1,4 +1,4 @@
-# Dorky Feature Implementation Roadmap
+# Pydorky Feature Implementation Roadmap
 
 This folder tracks features to implement, organized by priority and category.
 Each file represents a feature area with actionable tasks.

@@ -4,7 +4,7 @@ function App() {
   return (
     <div className="min-h-screen flex flex-col px-8">
       <header className="text-center my-8">
-        <h1 className="text-5xl font-bold text-blue-500">Dorky</h1>
+        <h1 className="text-5xl font-bold text-blue-500">Pydorky</h1>
         <p className="text-xl text-gray-800 dark:text-gray-300">DevOps Records Keeper</p>
       </header>
 

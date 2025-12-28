@@ -1,5 +1,5 @@
 {
-  "name": "dorky",
+  "name": "pydorky",
   "version": "2.1.8",
   "description": "DevOps Records Keeper.",
   "bin": {
