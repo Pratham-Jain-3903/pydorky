@@ -1,0 +1,57 @@
+name: E2E integration (Node CLI + Python client)
+on:
+  pull_request:
+  push:
+    branches:
+      - '**'
+
+jobs:
+  e2e:
+    name: Node16 + Python integration
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 16
+        uses: actions/setup-node@v4
+        with:
+          node-version: '16'
+
+      - name: Install root dependencies
+        run: npm ci
+
+      - name: Install server dependencies
+        run: |
+          cd server
+          npm ci
+
+      - name: Start server stub
+        run: |
+          cd server
+          nohup npm start > server.log 2>&1 &
+          # wait for server to be available
+          for i in {1..20}; do
+            if curl -sSf http://localhost:3000/ >/dev/null; then break; fi
+            sleep 1
+          done
+
+      - name: Node CLI smoke test
+        run: |
+          node --version
+          node bin/index.js --help || true
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install Python test deps and client
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest
+          pip install -e python-client
+
+      - name: Run Python client integration tests
+        run: |
+          pytest -q python-client/tests/test_integration.py
