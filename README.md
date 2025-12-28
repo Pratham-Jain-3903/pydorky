@@ -13,7 +13,7 @@
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![Node.js 16+](https://img.shields.io/badge/node.js-16+-green.svg)](https://nodejs.org/)
 
-[Features](#vision) • [Quick Start](#quick-start) • [Documentation](docs/) • [CLI Usage](#node-npm-users--cli-and-legacy-usage)
+[Features](#-vision) • [Quick Start](#-quick-start) • [Documentation](docs/) • [CLI Usage](#-node-npm-users--cli-and-legacy-usage)
 
 </div>
 
