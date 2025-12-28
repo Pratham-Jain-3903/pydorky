@@ -102,7 +102,7 @@ We continue to support the original Node/npm CLI workflows so JavaScript and Ops
 npm install -g dorky
 ```
 
-### Quick CLI commands (same workflow as before):
+### Quick CLI Commands
 
 - Initialize for AWS S3: `dorky --init aws`
 - Initialize for Google Drive: `dorky --init google-drive`
@@ -112,18 +112,18 @@ npm install -g dorky
 - Push staged files: `dorky --push`
 - Pull files from remote: `dorky --pull`
 
-## AWS S3 notes
+## AWS S3 Notes
 
 1. Create an S3 bucket and configure `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` in your environment.
 2. Use `dorky --init aws` to set up local metadata and `.dorkyignore`.
 3. Use `dorky --add`, `dorky --push`, `dorky --pull` as your normal workflow.
 
-## Google Drive notes
+## Google Drive Notes
 
 1. Use `dorky --init google-drive` and follow the OAuth setup instructions.
 2. Use the same `--add`, `--push`, `--pull` flow as above.
 
-## Developer & compatibility notes
+## Developer & Compatibility Notes
 
 - The repo contains both the Node CLI and a Python client. The canonical storage semantics are provided by a small HTTP service; clients are thin translators.
 - Current Node compatibility: project targets Node 16 (`.nvmrc` + `engines.node`), with a planned migration to Node 20. See `docs/doc#3 the-correct-node-version`.
