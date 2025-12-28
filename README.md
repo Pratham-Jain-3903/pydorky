@@ -1,88 +1,56 @@
-# dorky
+# Pydorky — Practical artifact storage for teams
 
+Introduction
+
+This repository is Pydorky, a Python-first client and ecosystem built around a small language-agnostic artifact service. Pydorky was inspired by the original `dorky` tool — originally authored by Trishant Pahwa — and extends the idea with data-focused features and a Python client optimized for data teams. The original project provided the foundation; this fork focuses the design on reliability, data ergonomics, and reproducible sharing.
+
+Vision
+
+Teams should never lose important artifacts in chat threads, ad-hoc paste tools, or personal drives. Pydorky offers a reproducible, privacy-aware, and developer-friendly way to store project artifacts (secrets, environment files, small datasets, and binaries) in user-controlled storage (S3, GCS, etc.).
+
+Why we built this
+
+I grew tired of important artifacts being scattered across chat apps (Teams, Slack), quick paste services (sharetext.io), and personal drives. That pattern causes lost context, duplicate uploads, and potential leaks. Pydorky provides a minimal, auditable, and automated alternative that:
+
+- keeps artifacts out of VCS while enabling reproducible sharing
+- integrates with existing cloud storage and IAM controls
+- provides lightweight metadata, idempotency, and streaming-friendly APIs
+- offers a Python client for data teams (Parquet/pyarrow integration) and thin clients for other languages
+
+Approach
+
+Keep the service small and language-agnostic. Implement a canonical HTTP service for storage semantics (streaming upload/download, idempotency keys, metadata, hierarchical sync). Language clients — Python and Node — remain thin translators that implement ergonomic workflows (`commit`, `stage`, `push`). Heavy data-format work (Parquet conversions, large-table transforms) is handled by optional Python tools or sidecar converters.
+
+Quick start
+
+Install the Python client (local editable):
+
+```bash
+pip install -e python-client
 ```
-     __            __
- .--|  .-----.----|  |--.--.--.
- |  _  |  _  |   _|    <|  |  |
- |_____|_____|__| |__|__|___  |
-                        |_____|
+
+Run a local stub service during development:
+
+```bash
+cd server
+npm install
+npm start
 ```
 
-[`DevOps Records Keeper`](https://dorky.trishantpahwa.me/)
+Upload with the Python client:
 
-[![dorky npm](https://img.shields.io/npm/v/dorky.svg?logo=npm)](https://npmjs.com/package/dorky)
+```python
+from dorky_client import DorkyClient
+client = DorkyClient('http://localhost:3000')
+client.upload('path/to/file', metadata={'note':'example'})
+```
 
-![Made with love in India](https://madewithlove.now.sh/in?heart=true&template=for-the-badge) `&& ` ![javascript](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E)
+Where to look next
 
-Let us assume that we need to create a project.
+Implementation notes and design rationale: see `docs/` (architecture, migration plan, Python client notes).
 
-The project obviously contains some code and some secret variables like database information, API keys, etc. This data cannot be shared on public VCS (GitHub), but at times is required to be accessible remotely to be shared among reliable sources.
+Acknowledgements
 
-Anyhow, we shall store it on a private storage, using **dorky**, that stores it on a S3 or Google-Drive.
+This project builds on and refines the ideas in the original `dorky` project. See `docs/` for more on differences and the migration path.
 
-## AWS S3
-
-### Steps to use with S3:
-
-> Create a S3 bucket, AWS_ACCESS_KEY and AWS_SECRET_KEY.
-
-![Dorky Usage](dorky-usage-aws.svg "Dorky usage")
-
-> Please use your own repository, this repository `sample_project` is just for demonstration.
-
-#### To list files in the project.
-
-1. Initialize dorky setup in the root folder of your project, using `dorky --init aws`.
-2. List the files using `dorky --list`.
-    > This command will not list the files that are excluded in `.dorkyignore`.
-
-#### To push files to S3 bucket.
-
-1. Initialize dorky setup in the root folder of your project, using `dorky --init aws`.
-2. List the files using `dorky --list`, (make sure to add excluded file or folder patterns to .dorkyignore, to minimize the list).
-3. Add files to stage-1 using `dorky --add file-name`.
-4. Push files to S3 bucket using `dorky --push`.
-
-#### To remove a file from project.
-
-1. Remove files using `dorky --rm file-name`. [Removes file from stage-1 <local>]
-2. Push files to S3 bucket using `dorky --push`. [Removes file from S3 bucket <remote>]
-
-#### To pull files from S3 bucket.
-
-1. Use `dorky --pull` to pull the files from S3 bucket.
-
-## Google Drive
-
-### Steps to use with Google Drive:
-
-![Dorky Usage](dorky-usage-google-drive.svg "Dorky usage")
-
-> Please use your own repository, this repository `sample_project` is just for demonstration.
-
-#### To list files in the project.
-
-1. Initialize dorky setup in the root folder of your project, using `dorky --init google-drive`.
-2. List the files using `dorky --list`.
-    > This command will not list the files that are excluded in `.dorkyignore`.
-
-#### To push files to Google Drive.
-
-1. Initialize dorky setup in the root folder of your project, using `dorky --init google-drive`.
-2. List the files using `dorky --list`, (make sure to add excluded file or folder patterns to .dorkyignore, to minimize the list).
-3. Add files to stage-1 using `dorky --add file-name`.
-4. Push files to Google Drive using `dorky --push`.
-
-#### To remove a file from project.
-
-1. Remove files using `dorky --rm file-name`. [Removes file from stage-1 <local>]
-2. Push files to Google Drive using `dorky --push`. [Removes file from Google Drive <remote>]
-
-#### To pull files from Google Drive.
-
-1. Use `dorky --pull` to pull the files from Google Drive.
-
-## To-Do
-
-[ ] Add stages for variables.
 

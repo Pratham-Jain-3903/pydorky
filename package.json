@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/trishantpahwa/dorky.git"
+    "url": "git+https://github.com/Pratham-Jain-3903/pydorky.git"
   },
   "keywords": [
     "DevOps",
@@ -19,12 +19,12 @@
     "yaml",
     "json"
   ],
-  "author": "Trishant Pahwa",
+  "author": "Pydorky contributors",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/trishantpahwa/dorky/issues"
+    "url": "https://github.com/Pratham-Jain-3903/pydorky/issues"
   },
-  "homepage": "https://github.com/trishantpahwa/dorky#readme",
+  "homepage": "https://github.com/Pratham-Jain-3903/pydorky#readme",
   "devDependencies": {
     "tsc": "^2.0.4",
     "typescript": "^5.5.4"

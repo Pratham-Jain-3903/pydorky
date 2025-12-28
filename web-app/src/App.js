@@ -30,11 +30,11 @@ function App() {
         <section className="my-8 w-full max-w-3xl">
           <h2 className="text-3xl text-blue-500 border-b-2 border-blue-500 pb-2 mb-4">How it Works</h2>
           <div className="flex flex-col items-center space-y-8">
-            <div className="card w-full"><img alt="AWS" src="https://github.com/trishantpahwa/dorky/raw/main/dorky-usage-aws.svg" /><p className="text-lg text-gray-800 dark:text-gray-300 mt-4">
+            <div className="card w-full"><img alt="AWS" src="https://github.com/Pratham-Jain-3903/pydorky/raw/main/dorky-usage-aws.svg" /><p className="text-lg text-gray-800 dark:text-gray-300 mt-4">
               Dorky integrates seamlessly with AWS S3 for secure storage of your project files.
             </p>
             </div>
-            <div className="card w-full"><img alt="Google-Drive" src="https://github.com/trishantpahwa/dorky/raw/main/dorky-usage-google-drive.svg" /><p className="text-lg text-gray-800 dark:text-gray-300 mt-4">
+            <div className="card w-full"><img alt="Google-Drive" src="https://github.com/Pratham-Jain-3903/pydorky/raw/main/dorky-usage-google-drive.svg" /><p className="text-lg text-gray-800 dark:text-gray-300 mt-4">
               Dorky can also leverage Google Drive for convenient file management.
             </p>
             </div>
