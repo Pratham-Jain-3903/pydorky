@@ -1,7 +1,13 @@
 <div align="center">
 
 <!-- Logo Placeholder - Replace with actual logo -->
-<img src="https://via.placeholder.com/200x200?text=PYDORKY" alt="Pydorky Logo" width="200"/>
+<img
+  src="https://raw.githubusercontent.com/Pratham-Jain-3903/pydorky/main/dorky512.png"
+  alt="Pydorky Logo"
+  width="500"
+  style="object-fit: cover; object-position: center; height: 350px;"
+/>
+
 
 # Pydorky
 
