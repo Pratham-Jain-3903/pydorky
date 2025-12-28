@@ -25,6 +25,9 @@
     "url": "https://github.com/Pratham-Jain-3903/pydorky/issues"
   },
   "homepage": "https://github.com/Pratham-Jain-3903/pydorky#readme",
+  "engines": {
+    "node": ">=16"
+  },
   "devDependencies": {
     "tsc": "^2.0.4",
     "typescript": "^5.5.4"

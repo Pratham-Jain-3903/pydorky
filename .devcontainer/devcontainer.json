@@ -1,6 +1,6 @@
 {
   "name": "Dorky Dev Container",
-  "image": "mcr.microsoft.com/vscode/devcontainers/javascript-node:18",
+  "image": "mcr.microsoft.com/vscode/devcontainers/javascript-node:16",
   "updateRemoteUserUID": false,
   "customizations": {
     "vscode": {
