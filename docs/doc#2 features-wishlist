@@ -1,0 +1,33 @@
+###this document highlights the features and vision for dorky as they come-up 
+
+### these are based on using dorky and my own observations purely 
+
+- this project is great it can be intialized as a seperate folder keeping project repo sanitary and avoid spilling artifacts into github remote which is the reason we have this in first place
+
+- amazing part is that it is bring your own bucket (BYOB) making the whole process easy to try out and use 
+at work as you can own the storage easily, it feels like rolling our own git
+
+- it has dev (commit), stage and push which is a great and familar workflow almost all devs are familiar with 
+asking them to add a commit message can build developer discipline too
+
+- but it is severly limited in its ability to organise the documnets they exist in a flat heiarchy on the bucket/data lake we need a sync function to create, store and retrieve documents in a heirchial file structure
+
+- it is only good for people who are using AWS/gcp  in thier stack, azure can be added too
+
+- it is an purely npm package while it can easily be used in other environments especially pypi (im biased to use it in my python projects)
+
+- as a data engineer i cant help but notice that the job of submitting files doesn't incorporate any compresssion eg a big json say 10 Mb could be converted to compressed json and converted back on retrieval, think parquet from csvs which are a headache since i need to regularly share them as fact tables in readable format from logs
+
+- we can use 2*num_cores -1 number of thread to compress and use some concurreny while uploading artifacts
+
+- can we think of how to fetch correct amount of deatils for some files say only a specific variable from and env
+
+- can we incrementally update the file instead of uploading and fetching it as a whole
+
+- the files themselves could use some metadata and check to avoid race conditions as well keep a clean record of changes for time travel eg: think of last updated time and checks to see if file was updated to raise merge conflicts
+
+- uploads could be idempotent 
+
+- optinally can we configure our bucket from dorky itself 
+
+- select to encrypt or obfustcate selected files

@@ -1,0 +1,107 @@
+
+Node version: current decision and migration plan
+-------------------------------------------------
+
+Canonical choice (short)
+ - Target Node version now: **Node 16.x** (maximum current compatibility for consumers and CI). Plan to migrate to **Node 20.x** in a future scheduled upgrade.
+
+Why Node 16 now
+ - Broadest compatibility: many users and older hosting environments still run Node 16.
+ - CI already uses `node-version: 16.x` in the publish workflow; keeping Node 16 avoids immediate CI churn.
+ - Minimizes breaking changes for native modules and downstream consumers.
+
+Why migrate to Node 20 later
+ - Better performance, updated V8, improved diagnostics, and a longer support window.
+ - Native `fetch` and runtime improvements simplify clients and reduce polyfills.
+
+What we will change/track now
+ - Add a source-of-truth file: create `.nvmrc` set to `16` and add `engines.node` to `package.json` to declare minimum required Node.
+ - Keep CI at `16.x` for now; add an optional migration branch that tests `20.x` in a short-lived matrix.
+ - Update `README.md` and `docs/doc#1  get-started` with the chosen Node version and `nvm` instructions.
+ - When ready to migrate to Node 20:
+	 1. Update devcontainer image to a Node 20 base.
+	 2. Run `npm ci` and full test suite under Node 20; regenerate `package-lock.json` if necessary.
+	 3. Run a CI matrix for `16.x` and `20.x` for a short stabilization period, then switch default to `20.x`.
+
+Checklist (short)
+ - [ ] Add `.nvmrc` with `16`
+ - [ ] Add `engines.node` to `package.json` (`>=16`)
+ - [ ] Update devcontainer image to match when migrating
+ - [ ] Add CI matrix job for Node 20 during migration window
+
+
+Full discussion and rationale (expanded)
+---------------------------------------
+
+Summary of alternatives we considered
+ - Node 16 (current baseline): oldest LTS in our compatibility target set, broadest runtime compatibility for users and CI. Fewer surprises with native modules and older hosting environments.
+ - Node 18: adds built-in Web APIs (`fetch`, `Blob`, `FormData`, Web Streams) and more modern stdlib conveniences. Lower upgrade surface than jumping directly to Node 20, but we decided to keep compatibility at Node 16 for now.
+ - Node 20: recommended future target — improved V8, better performance for crypto/hashing and IO, improved diagnostics, and longer LTS window. Offers native `fetch` and core runtime improvements.
+ - Node 22: longest-term future-proofing with the newest V8 and JS features, but may introduce early compatibility friction with some ecosystem packages.
+
+Why we picked Node 16 now (detailed)
+ - CI and many users still rely on Node 16 LTS; keeping Node 16 minimizes immediate friction for publishing and consumer installs.
+ - Native modules (e.g., binary bindings used by compression or Parquet-related packages) are more likely to remain compatible on Node 16 without rebuilds or pinned binaries.
+ - Our development and publishing pipelines are minimal today; a conservative choice reduces risk while we implement architecture changes (HTTP service + clients).
+
+Why migrate later to Node 20
+ - Node 20 gives us measurable runtime and crypto performance improvements which matter for artifact hashing, streaming, and compression workloads.
+ - Later migration lets us focus first on the architecture (language-agnostic HTTP service + thin clients) and test compatibility in CI before committing to a new runtime.
+
+How Node 16 maps to our wishlist (detailed compatibility)
+ - BYOB (bring-your-own-bucket): fully supported. Storage clients for S3/GCS/Azure work on Node 16.
+ - Commit / stage / push workflow: entirely application-level — supported.
+ - Hierarchical sync, metadata, versioning, idempotency: supported at the service layer; Node 16 supports required primitives (streams, `worker_threads`, `crypto`).
+ - Compression: `zlib` built-in; `lz4`, `brotli` available via npm. Parquet conversions are better in Python (`pyarrow`) — we will provide Python client or a conversion service for heavy data formats.
+ - Concurrency: use `worker_threads` (available and stable in Node 16) and streams to parallelize compression and uploads.
+ - Partial/incremental updates and ranged fetches: implementable with streaming and backend range/compose APIs (S3 multipart, GCS compose).
+ - Encryption and KMS integration: supported via Node `crypto` and provider SDKs.
+ - Native modules: possible but require CI pins and prebuilds — mitigate with CI and optional community-supported prebuilds.
+
+Risks and mitigations
+ - Native module incompatibility: mitigate by adding CI builds and publishing prebuilt binaries (or using pure-JS fallbacks). Test on Node 16 and Node 20 during migration.
+ - Missing Web APIs (global `fetch`) on Node 16: use `undici` or `node-fetch` polyfills in clients; keep network layer modular to swap implementations when moving to Node 20.
+ - Performance-sensitive workloads (large artifact compression/hash): use `worker_threads`, native modules, or offload heavy conversions to the Python client/service.
+ - Lockfile/regeneration issues when moving Node versions: regenerate `package-lock.json` under target Node during migration and run `npm ci` in CI.
+
+Migration plan (concrete steps)
+ 1. Declare current Node target: add `.nvmrc` with `16` and `engines.node` to `package.json` (`>=16`).
+ 2. Keep CI default at `16.x` for publishing and quick feedback.
+ 3. Add an optional CI matrix job to run a test matrix including `20.x` (and 16) for a short stabilization period.
+ 4. Run full test suite and integration tests (uploads/downloads, idempotency, metadata, compression) for Node 20 in CI, iterate to fix compatibility issues.
+ 5. Once stable, update `devcontainer.json` to a Node 20 base image, update docs to say `Node 20` as recommended runtime, and switch CI default to `20.x`.
+
+Recommended immediate actions (next PRs)
+ - Add `.nvmrc` with `16` to repo root.
+ - Add `engines.node` to `package.json`: `"engines": { "node": ">=16" }`.
+ - Add an integration test job to CI that runs key scenarios on Node 16.
+ - Add a short-lived CI matrix job for Node 20 to surface issues early.
+ - Document these changes in `README.md` and in `docs/doc#1  get-started`.
+
+Decision record
+ - Decision: use **Node 16** as the canonical immediate target for compatibility. Migrate to **Node 20** after stabilization and testing.
+ - Rationale: maximize compatibility now; plan migration to gain runtime and dev ergonomics benefits later.
+
+Links and references
+ - Get-started: see `docs/doc#1  get-started` for local dev steps.
+ - Python client guidance: see `docs/doc#2.5 python-port` for PyPI client plans and Parquet/pyarrow recommendations.
+
+Appendix: commands and examples
+ - Set Node and run locally (recommended for developers):
+
+```bash
+nvm install 16
+nvm use 16
+npm ci
+npm run build
+```
+
+ - Run quick compatibility test in CI (example matrix snippet for GitHub Actions):
+
+```yaml
+strategy:
+	matrix:
+		node-version: [16.x, 20.x]
+```
+
+

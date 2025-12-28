@@ -1,0 +1,34 @@
+
+Get started
+-----------
+
+Purpose
+ - Quick introduction to run and develop the Dorky core service and language clients.
+
+Architecture (high level)
+ - Core: a small language-agnostic HTTP service that implements artifact storage, streaming upload/download, metadata, idempotency and versioning.
+ - Clients: lightweight language clients (currently `npm` and planned `pypi`) that call the HTTP service or the CLI.
+
+Run locally (developer flow)
+ - Start the service (from the repo root) using the Node runtime configured for this project (see docs/doc#3 the-correct-node-version): use Node 16.x for local development.
+ - Example commands (use `nvm` or your preferred Node manager):
+
+```bash
+nvm use 16
+npm install
+npm run start
+```
+
+ - Install and run a language client from this repo (or call the HTTP API directly):
+
+```bash
+# from repo root (example)
+cd web-app
+npm install
+npm run start
+```
+
+Developer notes
+ - CI currently runs on Node 16 (publish workflow). Devcontainer image targets Node 18 — this will be aligned in a follow-up (see docs/doc#3 the-correct-node-version).
+ - If you are building clients in Python, see `docs/doc#2.5 python-port` for design and publishing guidance.
+

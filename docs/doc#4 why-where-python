@@ -1,0 +1,42 @@
+
+Why Python and where it fits
+---------------------------
+
+Overview
+ - Role split: Node (canonical HTTP service + JS client/CLI) handles core storage logic, streaming, idempotency, and integration with object stores. Python is used for:
+	 - Data-format heavy lifting (Parquet, pyarrow conversions, complex serialization)
+	 - Language-native clients for data teams (PyPI package)
+	 - Optional transformation microservices that are easier to implement with Python data libraries
+	 - Integration tests and ETL-friendly tooling that call the Node HTTP API
+
+How Python integrates with Node
+ - Language-agnostic HTTP API: The Node service exposes an OpenAPI-defined HTTP surface (uploads, downloads, metadata, idempotency). Python clients call this API directly.
+ - Sidecar/worker pattern: For heavy conversions (CSV -> Parquet, complex schema transforms) Python workers run as separate processes or services and either:
+	 - push transformed artifacts to the Node service via the same upload API, or
+	 - run as an on-demand conversion service invoked by Node (HTTP call or queue message).
+ - CLI interoperability: Python client will include a small CLI that mirrors the Node CLI (`commit`, `stage`, `push`) by calling the HTTP service; teams can use whichever CLI fits their environment.
+
+Why this is practical for our checklist
+ - Parquet & data formats: Python has mature libraries (`pyarrow`, `pandas`) for conversions and efficient columnar storage — avoids complex native bindings in Node.
+ - Testing parity: Integration tests can exercise the same HTTP API across Node and Python clients to ensure behaviour parity (idempotency, metadata, hierarchical sync).
+ - Maintainability: One canonical service in Node reduces duplication of business logic; Python focuses on data transformations and client ergonomics.
+
+Examples (usage patterns)
+ - Python client uploading a transformed Parquet file to the Node service:
+
+```python
+from dorky_client import DorkyClient
+
+client = DorkyClient('http://localhost:3000')
+client.upload('data/table.parquet', metadata={'table':'events'})
+```
+
+ - Node service calls a Python conversion service (HTTP) to convert CSV to Parquet, then ingests the result into the bucket via internal upload flow.
+
+Packaging & publishing
+ - Python client will be a small PyPI package (see `python-client/pyproject.toml`) that depends on `requests` (sync) and optionally `httpx` for async.
+ - Heavy dependencies like `pyarrow` are optional extras (`dorky[parquet]`) to keep the core client lightweight.
+
+Next steps
+ - We added a minimal OpenAPI spec and a Python client scaffold in `python-client/` to start implementation and tests.
+

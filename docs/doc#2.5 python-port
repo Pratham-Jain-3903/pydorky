@@ -1,0 +1,31 @@
+
+Python client & language-agnostic service and why we arent doing a python-port
+----------------------------------------
+
+Decision
+ - We will implement a language-agnostic HTTP core service and ship thin language clients. This keeps one canonical implementation of storage logic while providing first-class clients for Node and Python.
+
+Goals for the Python client
+ - Provide a small, idiomatic Python package on PyPI that mirrors the Node client feature set:
+	 - Upload/download (streaming) with configurable compression and encryption
+	 - Metadata operations, idempotency keys, and conflict checks
+	 - Hierarchical sync helpers (optional)
+	 - Minimal CLI wrapper for common workflows (commit / stage / push)
+
+Design notes
+ - The canonical business logic lives in the HTTP service; clients only translate language calls to HTTP requests.
+ - Use `requests` for simple blocking clients and `httpx` / `asyncio` for async needs.
+ - Use `pyarrow` / `fastparquet` for optional Parquet conversions and `gzip`/`lz4` for general compression.
+
+Packaging & CI
+ - Use `pyproject.toml` with Poetry or modern PEP-517 tooling.
+ - Publish first to TestPyPI, run integration tests against a local or test instance of the HTTP service, then promote to PyPI.
+
+Parity & tests
+ - Provide an integration test suite that runs the same scenarios against both Node and Python clients to ensure parity (uploads, metadata, idempotency, conflict resolution).
+
+Minimal milestone plan
+ 1. Define HTTP API spec (OpenAPI) for artifact operations.
+ 2. Implement a small Python client that calls the API (blocking) and add basic tests.
+ 3. Add async client, CLI, and PyPI publish pipeline.
+
