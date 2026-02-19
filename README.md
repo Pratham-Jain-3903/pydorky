@@ -14,7 +14,7 @@
 **Practical artifact storage for teams**
 
 [![Build Status](https://github.com/Pratham-Jain-3903/pydorky/actions/workflows/e2e-integration.yml/badge.svg)](https://github.com/Pratham-Jain-3903/pydorky/actions/workflows/e2e-integration.yml)
-[![npm version](https://img.shields.io/npm/v/dorky.svg)](https://www.npmjs.com/package/dorky)
+[![npm version](https://img.shields.io/npm/v/pydorky.svg)](https://www.npmjs.com/package/pydorky)
 [![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![Node.js 16+](https://img.shields.io/badge/node.js-16+-green.svg)](https://nodejs.org/)
